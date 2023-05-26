@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<div>
+  <input type="text" class="message"/>
+  <button onClick='send()' class="send-btn">보내기</button>
+</div>
+<div class="messages">
+  <div id="messages"></div>
+</div>
+</body>
+<script>
+  let client;
+  document.addEventListener("DOMContentLoaded", function() {
+    client = new WebSocket('ws://localhost:8080/ws/wschat');
+
+    client.onopen = function (event) {
+      console.log("Connected!!")
+    };
+
+    client.onmessage = function (event) {
+      const messages = document.querySelector("#messages");
+      const message = document.createElement("li");
+      message.innerText = event.data;
+      messages.appendChild(message)
+    }
+  });
+
+  function send() {
+    const message = document.querySelector(".message");
+    client.send(message.value);
+    message.value = '';
+  }
+</script>
+
+</html>
+
