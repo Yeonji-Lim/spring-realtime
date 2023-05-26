@@ -1,5 +1,4 @@
 # spring-realtime
----
 실시간 통신 구현 연습장
 
 ## Quick Start
